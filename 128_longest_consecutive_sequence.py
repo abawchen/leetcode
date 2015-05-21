@@ -34,7 +34,7 @@ class Solution:
         return n
 
 s = Solution()
-# print s.longestConsecutive([100])
+print s.longestConsecutive([100]) #1
 print s.longestConsecutive([0, -1]) #2
 print s.longestConsecutive([1, 2]) #2
 print s.longestConsecutive([100, 100, 101]) #2
