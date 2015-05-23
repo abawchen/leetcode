@@ -22,6 +22,7 @@ class Solution:
 
         return len(s)-1 in dic
 
+        # Faster 
         # i = 0
         # idx = 0
         # l = []
@@ -57,4 +58,8 @@ print s.wordBreak("cars", ["car", "ca", "rs"]) #True
 print s.wordBreak("leafjeifjifanvaeruieet", ["leet"]) #False
 print s.wordBreak("leafjeifjifanvaeruieet", ["leafjeifjifanvaeruieet"]) #True
 print s.wordBreak("leafjeifjifanvaeruieet", ["l", "e", "a", "f", "j", "e", "i", "f", "j", "i", "f", "a", "n", "v", "a", "e", "ruieet"]) #True
+print s.wordBreak(
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+    ["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"])
+
 print("--- %s seconds ---" % (time.time() - start_time))
