@@ -23,19 +23,19 @@ class Solution:
                 idx = i
             dic[n] = dic.get(n, 0) + 1
 
-        dupCheck = lambda x, v: -v == nums[x] and dic[-v] > 1
+        dup2Check = lambda x, v: v == nums[x] and dic[v] > 1
 
         i = 0
         while i <= idx and i < len(nums)-2:
             j = i+1 if nums[i] <= 0 else idx
             while j < len(nums)-1:
-                v = nums[i] + nums[j]
-                if -v in dic and -v >= nums[j]:
-                    if -v == nums[i] and -v == nums[j]:
-                        if dic[-v] > 2:
-                            sets.append([nums[i], nums[j], -v])
-                    elif -v not in (nums[i], nums[j]) or dupCheck(i, v) or dupCheck(j, v):
-                        sets.append([nums[i], nums[j], -v])
+                v = -(nums[i] + nums[j])
+                if v in dic and v >= nums[j]:
+                    if v == nums[i] and v == nums[j]:
+                        if dic[v] > 2:
+                            sets.append([nums[i], nums[j], v])
+                    elif v not in (nums[i], nums[j]) or dup2Check(i, v) or dup2Check(j, v):
+                        sets.append([nums[i], nums[j], v])
 
                 j = self.next(nums, j)
 
@@ -77,8 +77,13 @@ print s.threeSum([-1, 0, 1, 2, -1, -4, -1, 2, 0, 0]);
 
 
 print s.threeSum([-1, -4, -4, 8]);
+# [[-4, -4, 8]]
 print s.threeSum([-4, -4, 8]);
-print s.threeSum([-4, -4, -100]);
+# [[-4, -4, 8]]
 
+print s.threeSum([-4, -4, -100]);
+# []
 
 print s.threeSum([-1, 0, 1, 0])
+# [[-1, 0, 1]]
+
