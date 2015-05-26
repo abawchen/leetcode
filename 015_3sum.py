@@ -44,13 +44,9 @@ class Solution:
         return sets
 
     def next(self, nums, x):
-        if nums[x] != nums[x+1]:
+        while nums[x] == nums[x+1] and x < len(nums)-2:
             x += 1
-        else:
-            while nums[x] == nums[x+1] and x < len(nums)-2:
-                x += 1
-            x += 1
-        return x
+        return x+1
 
 
 s = Solution()
