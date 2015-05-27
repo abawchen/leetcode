@@ -10,14 +10,21 @@ class Solution:
     # @return {integer}
     def removeDuplicates(self, nums):
 
+        # O(n)
         i = 0
         while i < len(nums) - 1:
             if nums[i] == nums[i+1]:
-                nums.remove(nums[i])
+                del nums[i]
             else:
                 i += 1
         return len(nums)
 
+        # WA
+        # nums[:] = list(set(nums))
+        # return len(nums)
+
+import time
+start_time = time.time()
 
 s = Solution()
 print s.removeDuplicates([])
@@ -30,3 +37,5 @@ print s.removeDuplicates([1, 1, 2, 2, 2, 2, 3])
 print s.removeDuplicates([0, 1, 1, 2, 2, 2, 2, 3])
 print s.removeDuplicates([0, 0, 1, 1, 2, 2, 2, 2, 3, 8])
 print s.removeDuplicates([0, 0, 1, 1, 2, 2, 2, 2, 3, 8, 9, 9, 10, 10])
+
+print("--- %s seconds ---" % (time.time() - start_time))
