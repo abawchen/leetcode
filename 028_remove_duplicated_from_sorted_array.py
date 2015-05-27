@@ -10,14 +10,26 @@ class Solution:
     # @return {integer}
     def removeDuplicates(self, nums):
 
-        # O(n)
-        i = 0
-        while i < len(nums) - 1:
-            if nums[i] == nums[i+1]:
-                del nums[i]
-            else:
-                i += 1
-        return len(nums)
+        # O(n?)
+        if not nums:
+            return 0
+
+        tail = 0
+        for i in xrange(1, len(nums)):
+            if nums[i] != nums[tail]:
+                tail += 1
+                nums[tail] = nums[i]
+
+        return tail + 1
+
+        # # O(n?)
+        # i = 0
+        # while i < len(nums) - 1:
+        #     if nums[i] == nums[i+1]:
+        #         del nums[i]
+        #     else:
+        #         i += 1
+        # return len(nums)
 
         # WA
         # nums[:] = list(set(nums))
