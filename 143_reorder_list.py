@@ -44,21 +44,6 @@ class Solution:
             print cur.val
             cur = cur.next
 
-        # cur = head
-        # print cur.val
-        
-        # cur = cur.next
-        # print cur.val
-
-        # cur = cur.next
-        # print cur.val
-
-        # cur = cur.next
-        # print cur.val
-
-        # cur = cur.next
-        # print cur.val
-
         print "==========="
 
 
