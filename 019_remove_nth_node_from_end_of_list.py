@@ -22,23 +22,39 @@ class Solution:
     # @param {integer} n
     # @return {ListNode}
     def removeNthFromEnd(self, head, n):
-        if not head:
-            return head
 
-        i = 0
-        dic = {}
-        node = head;
-        while node:
-            dic[i] = node
-            node = node.next
-            i += 1
+        # no extra space
+        fast = slow = head
 
-        p = i - n
-        if p is 0:
-            head = head.next
-        else:
-            dic[p-1].next = dic.get(p+1, None)
+        for _ in range(n):
+            fast = fast.next
+        if not fast:
+            return head.next
+
+        while fast.next:
+            fast, slow = fast.next, slow.next
+
+        slow.next = slow.next.next
         return head
+
+        # extra space O(n)
+        # if not head:
+        #     return head
+
+        # i = 0
+        # dic = {}
+        # node = head;
+        # while node:
+        #     dic[i] = node
+        #     node = node.next
+        #     i += 1
+
+        # p = i - n
+        # if p is 0:
+        #     head = head.next
+        # else:
+        #     dic[p-1].next = dic.get(p+1, None)
+        # return head
 
     def printList(self, head):
         print "==========="
@@ -58,15 +74,15 @@ n4 = ListNode(5)
 # n5 = ListNode(6)
 # n6 = ListNode(7)
 
-# n0.next = n1
-# n1.next = n2
-# n2.next = n3
-# n3.next = n4
+n0.next = n1
+n1.next = n2
+n2.next = n3
+n3.next = n4
 # n4.next = n5
 # n5.next = n6
 
-# n0 = s.removeNthFromEnd(n0, 0)
-n0 = s.removeNthFromEnd(None, 0)
+# n0 = s.removeNthFromEnd(n0, 3)
+# n0 = s.removeNthFromEnd(None, 0)
 
 s.printList(n0)
 
