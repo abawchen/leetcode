@@ -9,6 +9,9 @@ class Solution:
     # @param {string} digits
     # @return {string[]}
     def letterCombinations(self, digits):
+        if not digits:
+            return []
+
         phoneDic = {
             '2': 'abc',
             '3': 'def',
