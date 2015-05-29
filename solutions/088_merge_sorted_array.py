@@ -34,3 +34,14 @@ class Solution:
 
         nums1[:] = nums1[:(m+n)]
         # return nums1 # for test
+
+        # O(nlogn) with built-in function extra space
+        # x = A[0:m]
+        # y = B[0:n]
+        # x.extend(y)
+        # x.sort()
+        # A[0:m+n] = x
+
+        # O(nlogn) with built-in function
+        # A[m:] = B[:n]
+        # A.sort()
