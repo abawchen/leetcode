@@ -14,12 +14,10 @@ class Solution:
     def permute(self, nums):
         if len(nums) <= 1:
             return [nums]
-        elif len(nums) == 2:
-            return [nums, [nums[1], nums[0]]]
 
         permutations = []
-        for i in xrange(len(nums)):
-            permutations.extend([ [nums[i]] + p for p in self.permute(nums[0:i] + nums[i+1:len(nums)]) ])
+        for i in range(len(nums)):
+            permutations.extend([ [nums[i]] + p for p in self.permute(nums[:i] + nums[i+1:]) ])
 
         return permutations
 
