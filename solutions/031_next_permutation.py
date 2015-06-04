@@ -26,14 +26,21 @@ class Solution:
 
         if target == -1:
             nums[:] = list(reversed(nums))
-            # return nums # for test
-            return
+            return nums # for test
+            # return
 
         for i in xrange(len(nums)-1, -1, -1):
             if nums[i] > nums[target]:
                 break
 
         v1, v2 = nums[target], nums.pop(i)
+
+        # slower, 76ms
+        # i, tail = 0, [] + list(reversed(nums[target+1:]))
+        # while i < len(tail) and v1 > tail[i]:
+        #     i += 1
+        # tail.insert(i, v1)
+
         if target < len(nums)-1:
             i, tail = 0, list(reversed(nums[target+1:]))
             while i < len(tail) and v1 > tail[i]:
@@ -43,3 +50,6 @@ class Solution:
             tail = [v1]
 
         nums[:] = nums[:target] + [v2] + tail
+
+
+        return nums #for test
