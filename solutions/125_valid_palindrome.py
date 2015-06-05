@@ -25,3 +25,7 @@ class Solution:
             start, end = start+1, end-1
 
         return True
+
+
+        # s = re.sub("\W", "", s).lower()
+        # return s == s[::-1]
