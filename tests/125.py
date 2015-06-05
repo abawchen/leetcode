@@ -31,5 +31,18 @@ class Test125(unittest.TestCase):
             s.isPalindrome("")
         )
 
+        self.assertTrue(
+            s.isPalindrome("ab ba")
+        )
+
+        self.assertTrue(
+            s.isPalindrome("aba")
+        )
+
+
+        self.assertFalse(
+            s.isPalindrome("abcdba")
+        )
+
 if __name__ == '__main__':
     unittest.main()

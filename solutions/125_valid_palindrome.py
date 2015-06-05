@@ -14,14 +14,14 @@ class Solution:
     # @param {string} s
     # @return {boolean}
     def isPalindrome(self, s):
-        s = ''.join([c for c in s.lower() if c.isalpha()])
+        s = ''.join([c for c in s.lower() if c.isalnum()])
         if not s:
             return True
         
-        return self._isPalindromeString(s)
+        start, end = 0, len(s)-1
+        while start <= end:
+            if s[start] != s[end]:
+                return False
+            start, end = start+1, end-1
 
-    def _isPalindromeString(self, s):
-        if s[0] != s[-1]:
-            return False
-        else:
-            return True if len(s[1:-1]) <= 1 else self._isPalindromeString(s[1:-1])
+        return True
