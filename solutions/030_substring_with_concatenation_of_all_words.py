@@ -13,62 +13,29 @@ class Solution:
     # @param {string} s
     # @param {string[]} words
     # @return {integer[]}
+    # O(mn)
     def findSubstring(self, s, words):
-        # from collections import defaultdict
-        # dic = defaultdict(list)
+        
+        from collections import defaultdict
 
-        # indices, length, totalLength = [], len(words[0]), len(words[0])*len(words)
-        # for i in range(len(s)):
-        #     j, k, dupWords = i, i, words[:]
+        indices, wordsDic = [], defaultdict(int)
+        sl, wl, twl, total = len(s), len(words[0]), len(words[0])*len(words), len(words)
 
-        #     if totalLength > len(s[j:]):
-        #         # print "dic:", dic
-        #         return indices
+        for w in words:
+            wordsDic[w] += 1
 
-        #     if j in dic:
-        #         for w in dic[j]:
-        #             print "w:", w
-        #             # j += len(w)
-        #             dupWords.remove(w)
-        #         print "(j, dic[j]):", (j, dic[j])
+        for i in range(sl):
+            t, j, dic = 0, i, wordsDic.copy()
 
-        #     while s[j:j+length] in dupWords:
-        #         # print "(i, j):", (i, j)
-        #         if dic[j+length]:
-        #             dic[j+length] += dic[j]
-        #         else:
-        #             dic[j+length] += [s[j:j+length]]
-        #         dupWords.remove(s[j:j+length])
-        #         j += length
-
-        #     print "(i, dupWords):", (i, dupWords)
-        #     if not dupWords:
-        #         # print "new k:", k
-        #         indices.append(k)
-
-
-        # brute force
-        # print (len(s), len(words))
-        # print words
-        indices, failed = [], set()
-        length, totalLength = len(words[0]), len(words[0])*len(words)
-        for i in range(len(s)):
-            j, dupWords = i, words[:]
-
-            if totalLength > len(s[j:]):
+            if twl > sl-i:
                 return indices
 
-            if s[i:i+totalLength] in failed:
-                continue
+            while dic[s[j:j+wl]] > 0:
+                dic[s[j:j+wl]] -= 1
+                t, j = t+1, j+wl
 
-            while s[j:j+length] in dupWords:
-                dupWords.remove(s[j:j+length])
-                j += length
-
-            if not dupWords:
+            if t == total:
                 indices.append(i)
-            else:
-                failed.add(s[i:i+totalLength])
 
         return indices
 
