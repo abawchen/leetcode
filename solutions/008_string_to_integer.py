@@ -29,25 +29,18 @@ class Solution:
     # @return {integer}
     def myAtoi(self, s):
         s = s.strip()
-        value, negative, valid, sign = 0, False, False, False
+        if not s:
+            return 0
+
+        value, negative = 0, s[0] == '-'
         digits = set([str(i) for i in xrange(10)])
+
+        if s[0] in ('+', '-'):
+            s = s[1:]
+
         for c in s:
-            if c in (' '):
-                break
-
-            if c in ('+', '-'):
-                if valid:
-                    break
-
-                if sign:
-                    return 0
-
-                sign = True
-                negative = c == '-'
-            
-            elif c in digits:
-                valid = True
-                value = 10 * value + int(c)
+            if c in digits:
+                value = 10*value + int(c)
             else:
                 break
 
