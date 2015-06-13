@@ -10,6 +10,9 @@ class Test(unittest.TestCase):
     def test_hasCycle(self):
         s = solutions.Solution()
 
+        head = helper.constructListNode([1, 2])
+        self.assertEqual(s.hasCycle(head), False)
+
         head = helper.constructListNode([1, 2, 3, 4])
         self.assertEqual(s.hasCycle(head), False)
 

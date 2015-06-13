@@ -16,13 +16,11 @@ class Solution:
         if not head:
             return False
 
-        visited = set()
-        node = head.next
-        while node:
-            if node in visited:
+        walker = runner = head
+        while runner and runner.next:
+            walker = walker.next
+            runner = runner.next.next
+            if walker == runner:
                 return True
-
-            visited.add(node)
-            node = node.next
 
         return False
