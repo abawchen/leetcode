@@ -14,14 +14,44 @@ class Solution:
     # @param head, a ListNode
     # @return a list node
     def detectCycle(self, head):
-        visited = set()
+        if not head:
+            return None
 
-        node = head
-        while node:
-            if node in visited:
-                return node
+        count = length = 0
+        walker = runner = head
+        while runner and runner.next:
+            count += 1
+            walker = walker.next
+            runner = runner.next.next
 
-            visited.add(node)
-            node = node.next
+            if walker == runner:
+                if length == 0:
+                    length = count
+                else:
+                    length = count - length
+                    break
 
-        return None
+        if length == 0:
+            return None
+
+        walker = runner = head
+        for _ in range(length):
+            runner = runner.next
+
+        while walker != runner:
+            walker, runner = walker.next, runner.next
+
+        return walker
+
+
+        # visited = set()
+
+        # node = head
+        # while node:
+        #     if node in visited:
+        #         return node
+
+        #     visited.add(node)
+        #     node = node.next
+
+        # return None

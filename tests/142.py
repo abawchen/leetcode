@@ -31,5 +31,24 @@ class Test(unittest.TestCase):
         self.assertEqual(s.detectCycle(head), head.next)
 
 
+
+        head = helper.constructListNode([i for i in xrange(1, 22)])
+        dic = self._listNodeDic(head)
+        dic[21].next = dic[18]
+        self.assertEqual(s.detectCycle(head), dic[18])
+
+        dic[21].next = dic[10]
+        self.assertEqual(s.detectCycle(head), dic[10])
+
+
+    def _listNodeDic(self, head):
+        dic = {}
+        i, node = 1, head
+        while node:
+            dic[i], node = node, node.next
+            i += 1
+        return dic
+
+
 if __name__ == '__main__':
     unittest.main()
