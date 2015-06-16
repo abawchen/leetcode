@@ -11,21 +11,19 @@ class Solution:
 
         fn = 0 if nums[0] >= 0 else 1
         val = 1 if nums[0] == 0 else nums[0]
-        ans = tot = nums[0]
+        ans = nums[0]
 
         for n in nums[1:]:
             if n == 0:
-                fn, tot, val = 0, 0, 1
-                ans = max(ans, 0)
+                fn, val, ans = 0, 1, max(ans, 0)
                 continue
 
             if n < 0 and fn == 0:
-                fn = 1
-                tot, val = tot*n, val*n
+                fn, val = 1, val*n
                 continue
 
-            tot, fn, val = tot*n, fn*n, val*n
-            ans = max(ans, val, tot, fn)
+            fn, val = fn*n, val*n
+            ans = max(ans, val, fn)
 
         return ans
 
