@@ -26,6 +26,7 @@ class Solution:
         return self._recursiveMatch(s, p)
 
     def _recursiveMatch(self, s, p):
+        # print "here:", (s, p)
         if not s:
             sp = set(p)
             if len(sp) == 1 and sp.pop() == '*':
@@ -45,16 +46,22 @@ class Solution:
                 if m == len(p):
                     return True
 
-                idx = s.rfind(p[m])
-                # print "idx:", idx, (s[idx+1:], p[m+1:]) 
-                while idx != -1:
-                    if self._recursiveMatch(s[idx+1:], p[m+1:]):
-                        return True
-                    idx = s[:idx].rfind(p[m])
+                # idx = s.rfind(p[m])
+                # while idx != -1:
+                #     if self._recursiveMatch(s[idx+1:], p[m+1:]):
+                #         return True
+                #     idx = s[:idx].rfind(p[m])
+
+                # idx = s.find(p[m])
+                # pos = idx+1
+                # while idx != -1:
+                #     if self._recursiveMatch(s[pos:], p[m+1:]):
+                #         return True
+                #     idx = s[pos:].find(p[m])
+                #     pos += idx+1
+
                 return False
             else:
-                # print "else:", (i, j)
                 return False
 
-        # print "(i, j):", (i, j), "(len(s), len(p)):", (len(s), len(p))
         return i == len(s) and j == len(p)

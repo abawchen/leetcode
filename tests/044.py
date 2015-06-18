@@ -64,15 +64,23 @@ class Test(unittest.TestCase):
         # st, pa = "aabefefefb", "*b*a"
         # self.assertEqual(s.isMatch(st, pa), False)
 
+        # st, pa = "efefefb", "*a"
+        # self.assertEqual(s.isMatch(st, pa), False)
+
         # st, pa = "aabefefefba", "*b*a"
         # self.assertEqual(s.isMatch(st, pa), True)
 
         # st, pa = "aabefefefb", "*b"
         # self.assertEqual(s.isMatch(st, pa), True)
 
+        # st, pa = "", ""
+        # self.assertEqual(s.isMatch(st, pa), True)        
+
+        # st, pa = "efefefb", ""
+        # self.assertEqual(s.isMatch(st, pa), False)
+
         # st, pa = "aabefefefbe", "*b?"
         # self.assertEqual(s.isMatch(st, pa), True)
-
 
         # st, pa = "aabefbcefefb", "*b*bc*f*ef?b"
         # self.assertEqual(s.isMatch(st, pa), False)
@@ -80,9 +88,14 @@ class Test(unittest.TestCase):
         # st, pa = "fe", ""
         # self.assertEqual(s.isMatch(st, pa), False)
 
-        st = "abbaabbbbababaababababbabbbaaaabbbbaaabbbabaabbbbbabbbbabbabbaaabaaaabbbbbbaaabbabbbbababbbaaabbabbabb"
-        pa = "***b**a*a*b***b*a*b*bbb**baa*bba**b**bb***b*a*aab*a**" 
-        self.assertEqual(s.isMatch(st, pa), True)
+        # st = "abbaabbbbababaababababbabbbaaaabbbbaaabbbabaabbbbbabbbbabbabbaaabaaaabbbbbbaaabbabbbbababbbaaabbabbabb"
+        # pa = "***b**a*a*b***b*a*b*bbb**baa*bba**b**bb***b*a*aab*a**" 
+        # self.assertEqual(s.isMatch(st, pa), True)
+
+
+        st = "babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb"
+        pa = "b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a"
+        self.assertEqual(s.isMatch(st, pa), False)
 
 if __name__ == '__main__':
     unittest.main()
