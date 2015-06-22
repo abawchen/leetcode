@@ -15,11 +15,15 @@ class Test(unittest.TestCase):
         newHead = s.copyRandomList(head)
         self.assertEqual(helper.randomListNodeToArray(newHead),
             [1, 2, 3, 4])
+        self.assertEqual(helper.randomListNodeToArray(head),
+            [1, 2, 3, 4])
 
         head = helper.constructRandomListNode([1, 2, 3, 4])
         head.random = head.next
         newHead = s.copyRandomList(head)
         self.assertEqual(helper.randomListNodeToArray(newHead),
+            [1, 'r:2', 2, 3, 4])
+        self.assertEqual(helper.randomListNodeToArray(head),
             [1, 'r:2', 2, 3, 4])
 
         head = helper.constructRandomListNode([1, 2, 3, 4])
@@ -28,15 +32,26 @@ class Test(unittest.TestCase):
         newHead = s.copyRandomList(head)
         self.assertEqual(helper.randomListNodeToArray(newHead),
             [1, 'r:2', 2, 'r:1', 3, 4])
+        self.assertEqual(helper.randomListNodeToArray(head),
+            [1, 'r:2', 2, 'r:1', 3, 4])
 
+        head = helper.constructRandomListNode([1, 2, 3, 4])
+        head.next.next.next.random = head.next.next.next
+        newHead = s.copyRandomList(head)
+        self.assertEqual(helper.randomListNodeToArray(newHead),
+            [1, 2, 3, 4, 'r:4'])
+        self.assertEqual(helper.randomListNodeToArray(head),
+            [1, 2, 3, 4, 'r:4'])
 
         head = helper.constructRandomListNode([1, 2, 3, 4])
         head.random = head.next
         head.next.random = head
         head.next.next.random = head.next
-        head.next.next.next.random = head.next.next.next
+        head.next.next.next.random = head.next.next.next        
         newHead = s.copyRandomList(head)
         self.assertEqual(helper.randomListNodeToArray(newHead),
+            [1, 'r:2', 2, 'r:1', 3, 'r:2', 4, 'r:4'])
+        self.assertEqual(helper.randomListNodeToArray(head),
             [1, 'r:2', 2, 'r:1', 3, 'r:2', 4, 'r:4'])
 
 
@@ -45,16 +60,18 @@ class Test(unittest.TestCase):
 
 
         head = helper.constructRandomListNode([1])
-        # head.random = head.next
         newHead = s.copyRandomList(head)
         self.assertEqual(helper.randomListNodeToArray(newHead),
             [1])
-
+        self.assertEqual(helper.randomListNodeToArray(head),
+            [1])
 
         head = helper.constructRandomListNode([1])
         head.random = head
         newHead = s.copyRandomList(head)
         self.assertEqual(helper.randomListNodeToArray(newHead),
+            [1, 'r:1'])
+        self.assertEqual(helper.randomListNodeToArray(head),
             [1, 'r:1'])
 
 

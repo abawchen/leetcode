@@ -18,25 +18,28 @@ class Solution:
 
         cur = head
         newCur = newHead = RandomListNode(cur.label)
-
-        while cur.next:
-            cur = cur.next
-            newCur.next = RandomListNode(cur.label)
-            newCur = newCur.next
-
-        cur, newCur = head, newHead
         while cur:
-            if cur.random:
-                newCur.random = cur.random
-            node = cur
+            newCur.random = cur.random
+            cur.random = newCur
+
             cur = cur.next
-            node.next = newCur
-            newCur = newCur.next
+            if cur:
+                newCur.next = RandomListNode(cur.label)
+                newCur = newCur.next
+
 
         newCur = newHead
+        dupCur = dupHead = RandomListNode(head.label)
         while newCur:
             if newCur.random:
-                newCur.random = newCur.random.next
-            newCur = newCur.next
-        
+                dupCur.random = newCur.random
+                newCur.random = newCur.random.random
+            dupCur.next = RandomListNode(0)
+            newCur, dupCur = newCur.next, dupCur.next
+
+        cur, dupCur = head, dupHead
+        while cur:
+            cur.random = dupCur.random
+            cur, dupCur = cur.next, dupCur.next
+
         return newHead
