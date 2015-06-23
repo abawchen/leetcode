@@ -42,29 +42,4 @@ class Solution:
 
             return answer
 
-        else:
-            return []
-
-
-s = Solution()
-
-# https://leetcode.com/discuss/18248/word-break-ii-time-limit-exceeded-error-when-input-is-a
-# print s.wordBreak(
-#     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
-#     ["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"])
-
-# #['aaa aaaa', 'a a a aaaa', 'aaaa aaa', 'a aaa aaa', 'aaa a aaa', 'a a a a aaa', 'a a aaaa a', 'aaa aaa a', 'a a a aaa a', 'a aaaa a a', 'a a aaa a a', 'aaaa a a a', 'a aaa a a a', 'aaa a a a a', 'a a a a a a a']
-
-
-# print s.wordBreak("leet", ["leet"]) #['leet']
-print s.wordBreak("leetcode", ["leet", "code"]) #['leet code']
-print s.wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]) #['cat sand dog', 'cats and dog']
-
-print s.wordBreak("aaaaaaa", ["aaaa", "aa"]) #[]
-print s.wordBreak("aaaaaaa", ["aaaa", "aaa"]) #['aaa aaaa', 'aaaa aaa']
-print s.wordBreak("aaaaaaa", ["aaa", "aaaa", "a"])
-# #['aaa aaaa', 'a a a aaaa', 'aaaa aaa', 'a aaa aaa', 'aaa a aaa', 'a a a a aaa', 'a a aaaa a', 'aaa aaa a', 'a a a aaa a', 'a aaaa a a', 'a a aaa a a', 'aaaa a a a', 'a aaa a a a', 'aaa a a a a', 'a a a a a a a']
-
-# print s.wordBreak("leafjeifjifanvaeruieet", ["leet"]) #[]
-# print s.wordBreak("leafjeifjifanvaeruieet", ["leafjeifjifanvaeruieet"]) #['leafjeifjifanvaeruieet']
-# print s.wordBreak("leafjeifjifanvaeruieet", ["l", "e", "a", "f", "j", "e", "i", "f", "j", "i", "f", "a", "n", "v", "a", "e", "ruieet"]) #['l e a f j e i f j i f a n v a e ruieet']
+        return []
