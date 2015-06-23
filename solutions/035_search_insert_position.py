@@ -15,9 +15,20 @@ class Solution:
     # @param {integer} target
     # @return {integer}
     def searchInsert(self, nums, target):
-        
-        for i, n in enumerate(nums):
-            if n >= target:
-                return i
+        return self._binarySearch(nums, target, 0, len(nums)-1)
 
-        return len(nums)
+    # @param {integer[]} nums
+    # @param {integer} target
+    # @param {integer} start(index)
+    # @param {integer} end(index)
+    # @return {integer}
+    def _binarySearch(self, nums, target, start, end):
+        if start > end:
+            return start
+
+        mid = (start+end)/2
+
+        if nums[mid] == target:
+            return mid
+
+        return self._binarySearch(nums, target, start, mid-1) if nums[mid] > target else self._binarySearch(nums, target, mid+1, end)
