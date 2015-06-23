@@ -18,13 +18,11 @@ class Solution:
         }
 
         num, i = 0, 0
-        while i < len(s)-1:
+        while i < len(s):
             if s[i:i+2] in romanDic:
                 num += romanDic[s[i:i+2]]
                 i += 2
             else:
                 num += romanDic[s[i]]
                 i += 1
-        if i < len(s):
-            num += romanDic[s[-1]]
         return num

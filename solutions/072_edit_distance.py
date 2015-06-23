@@ -26,7 +26,7 @@ class Solution:
                     m[i-1][j] + 1,
                     m[i][j-1] + 1)
 
-        return m[len(word1)][len(word2)]
+        return m[-1][-1]
 
         # from collections import defaultdict
         # minDic = defaultdict(int)

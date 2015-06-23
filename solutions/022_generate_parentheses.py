@@ -6,10 +6,6 @@
 # For example, given n = 3, a solution set is:
 # "((()))", "(()())", "(())()", "()(())", "()()()" 
 
-# For example, given n = 4, a solution set is:
-# "(((())))", "((()()))", "((())())", "(()(()))", "(()()())" 
-# 
-
 
 class Solution:
     # @param {integer} n
@@ -30,7 +26,7 @@ class Solution:
                     stack.append((parenthes + ')', cur-1, left))
                 stack.append((parenthes + '(', cur+1, left-1))
 
-        
+
         return parentheses
 
 

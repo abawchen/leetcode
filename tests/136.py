@@ -2,11 +2,10 @@ import unittest
 import sys
 sys.path.append('./')
 
-# http://stackoverflow.com/questions/147507/how-does-one-do-the-equivalent-of-import-from-module-with-pythons-import
 solutions = __import__('solutions.136_single_number', fromlist='*')
 
 
-class Test021(unittest.TestCase):
+class Test(unittest.TestCase):
 
     def test_singleNumber(self):
         s = solutions.Solution()

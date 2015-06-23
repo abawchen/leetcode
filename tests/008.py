@@ -4,7 +4,7 @@ sys.path.append('./')
 solutions = __import__('solutions.008_string_to_integer', fromlist='*')
 
 
-class Test022(unittest.TestCase):
+class Test(unittest.TestCase):
 
     def test_myAtoi(self):
         s = solutions.Solution()

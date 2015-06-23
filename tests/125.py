@@ -19,7 +19,7 @@ class Test125(unittest.TestCase):
         )
 
 
-        self.assertTrue(
+        self.assertFalse(
             s.isPalindrome("A man, a plan, a canal: Panama 123")
         )
 

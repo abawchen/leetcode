@@ -28,5 +28,6 @@ class Test(unittest.TestCase):
         self.assertEqual(s.convertToTitle(1403), "BAY")
         self.assertEqual(s.convertToTitle(5372), "GXP")
 
+
 if __name__ == '__main__':
     unittest.main()

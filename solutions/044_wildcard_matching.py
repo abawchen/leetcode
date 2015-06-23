@@ -36,6 +36,7 @@ class Solution:
         while j < len(p) and i < len(s):
             if p[j] == '?' or s[i] == p[j]:
                 i, j = i+1, j+1
+                continue
             elif p[j] == '*':
                 m, c = j+1, 0
                 while m < len(p) and p[m] in ('*', '?'):
@@ -52,16 +53,14 @@ class Solution:
                 #         return True
                 #     idx = s[:idx].rfind(p[m])
 
-                # idx = s.find(p[m])
-                # pos = idx+1
-                # while idx != -1:
-                #     if self._recursiveMatch(s[pos:], p[m+1:]):
-                #         return True
-                #     idx = s[pos:].find(p[m])
-                #     pos += idx+1
+                idx = s.find(p[m])
+                pos = idx+1
+                while idx != -1:
+                    if self._recursiveMatch(s[pos:], p[m+1:]):
+                        return True
+                    idx = s[pos:].find(p[m])
+                    pos += idx+1
 
-                return False
-            else:
-                return False
+            return False
 
         return i == len(s) and j == len(p)

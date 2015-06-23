@@ -24,7 +24,6 @@ class Solution:
             '93': 'CM', # 900
         }
 
-
         roman = ""
         remainders = ['4', '9']
         divisors = [1000, 500, 100, 50, 10, 5, 1]

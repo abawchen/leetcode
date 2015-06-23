@@ -6,59 +6,7 @@ class Solution:
         strNum = [str(i) for i in nums]
         strNum.sort(lambda x,y: int(y+x) - int(x+y))
         return str(int(''.join(strNum)))
-
-
-        # if nums == None or len(nums) == 0:
-        #     return None
-
-        # if len(nums) == 1:
-        #     return str(nums[0])
-
-        # self.zero = True
-        # nums.sort(self.cmp)
-
-        # if self.zero:
-        #     return "0"
-
-        # return str(reduce(lambda a, b: str(a) + str(b), nums))
-
-    def cmp(self, a, b):
-        # if self.zero and (a > 0 or b > 0):
-        #     self.zero = False
-
-        # a, b =  str(a), str(b)
-        # r1 = eval(a+"+"+b)
-        # r2 = eval(a+"+"+b)
-        # if r1 > r2:
-        #     return -1
-
-        # return 1
-        if self.zero and (a > 0 or b > 0):
-            self.zero = False
-
-        a = str(a)
-        b = str(b)
-        for i in xrange(0, max(len(a), len(b))):
-            if i < len(a) and i < len(b):
-                if a[i] > b[i]:
-                    return -1
-                elif a[i] < b[i]:
-                    return 1
-            elif i >= len(a):
-                if a[0] > b[i]:
-                    return -1
-                elif a[0] < b[i]:
-                    return 1
-            else:
-                if b[0] > a[i]:
-                    return 1
-                elif b[0] < a[i]:
-                    return -1
-
-        if int(a + b) > int(b + a):
-            return -1
-        
-        return 1
+    
 
 s = Solution()
 # print(s.largestNumber(None))

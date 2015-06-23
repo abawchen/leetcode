@@ -5,7 +5,7 @@ sys.path.append('./')
 solutions = __import__('solutions.014_longest_common_prefix', fromlist='*')
 
 
-class Test012(unittest.TestCase):
+class Test014(unittest.TestCase):
 
     def test_longestCommonPrefix(self):
         s = solutions.Solution()

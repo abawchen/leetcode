@@ -21,9 +21,6 @@ class Solution:
     # @param {Interval} newInterval
     # @return {Interval[]}
     def insert(self, intervals, newInterval):
-
-        # if newInterval.start > 
-
         newIntervals = []
         for i, interval in enumerate(intervals):
             if newInterval.end < interval.start:

@@ -14,8 +14,7 @@ class Solution:
     # @param {string[]} words
     # @return {integer[]}
     # O(mn)
-    def findSubstring(self, s, words):
-        
+    def findSubstring(self, s, words):        
         from collections import defaultdict
 
         indices, wordsDic = [], defaultdict(int)

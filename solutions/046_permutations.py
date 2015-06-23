@@ -12,14 +12,28 @@ class Solution:
     # @param {integer[]} nums
     # @return {integer[][]}
     def permute(self, nums):
-        if len(nums) <= 1:
-            return [nums]
 
-        permutations = []
-        for i in range(len(nums)):
-            permutations.extend([ [nums[i]] + p for p in self.permute(nums[:i] + nums[i+1:]) ])
+        if not num:
+            return num
+        res = [[nums[0]]]
+        print res
+        for i in range(1, len(nums)):
+            for j in range(len(res)):
+                tmp = res.pop(0)
+                for k in range(len(tmp)+ 1):
+                    res.append(tmp[:k] + [nums[i]] + tmp[k:])
+                    
+        return res
 
-        return permutations
+        # if len(nums) <= 1:
+        #     return [nums]
+
+        # permutations = []
+        # for i in range(len(nums)):
+        #     permutations.extend([ [nums[i]] + p for p in self.permute(nums[:i] + nums[i+1:]) ])
+
+        # print permutations
+        # return permutations
 
 
 
