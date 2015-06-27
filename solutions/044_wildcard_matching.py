@@ -23,44 +23,117 @@ class Solution:
     # @param {string} p
     # @return {boolean}
     def isMatch(self, s, p):
-        return self._recursiveMatch(s, p)
+        if p:
+            p = self._simplifyPattern(p, p[0], p[0])
 
-    def _recursiveMatch(self, s, p):
-        # print "here:", (s, p)
         if not s:
-            sp = set(p)
-            if len(sp) == 1 and sp.pop() == '*':
-                return True
+            return p == '*' or not p
 
-        i = j = 0
-        while j < len(p) and i < len(s):
-            if p[j] == '?' or s[i] == p[j]:
-                i, j = i+1, j+1
+        if not p:
+            return not s
+
+        # print "len(p):", len(p)
+        dp = [0] * len(s)
+
+        if p[0] == '*':
+            dp = [1] * len(s)
+        elif p[0] == '?':
+            dp[0] = 1
+        else:
+            if p[0] != s[0]:
+                return False
+            dp[0] = 1
+
+        i, j, pre = 0, 1, p[0]
+        while j < len(p):
+            if p[j] == '*':
+                for k in range(i, len(s)):
+                    dp[k] = j+1
+            elif p[j] == '?':
+                if pre != '*':
+                    for k in range(i, len(s)-1):
+                        if dp[k] == j:
+                            dp[k+1] = j+1
+                else:
+                    for k in range(i, len(s)):
+                        dp[k] = j+1
+                i += 1
+            else:
+                offset = 0 if pre == '*' else 1
+                first = False
+                cdp = dp[:]
+                for k in range(i, len(s)):
+                    if cdp[k-offset] == j and s[k] == p[j]:
+                        dp[k] = j+1
+                        i, first = k if not first else i, True
+                if not first:
+                    break
+
+            j, pre = j+1, p[j]
+
+        return dp[-1] == len(p)
+
+
+    def _simplifyPattern(self, p, sp, pre):
+
+        for c in p[1:]:
+            if c == '*' and pre == '*':
                 continue
-            elif p[j] == '*':
-                m, c = j+1, 0
-                while m < len(p) and p[m] in ('*', '?'):
-                    if p[m] == '?':
-                        c += 1
-                    m += 1
+            
+            sp, pre = sp+c, c
 
-                if m == len(p):
-                    return True
+        return sp
 
-                # idx = s.rfind(p[m])
-                # while idx != -1:
-                #     if self._recursiveMatch(s[idx+1:], p[m+1:]):
-                #         return True
-                #     idx = s[:idx].rfind(p[m])
+    # def _cutTail(self, s, p):
+    #     i, j = len(s)-1, len(p)-1
+    #     while i >= 0 and j >= 0 and p[j] != '*':
+    #         if p[j] != '?' and p[i] != p[j]:
+    #             return -1, -1
+    #         i, i = i-1, j-1
+    #     return s[:i], p[:j]
 
-                idx = s.find(p[m])
-                pos = idx+1
-                while idx != -1:
-                    if self._recursiveMatch(s[pos:], p[m+1:]):
-                        return True
-                    idx = s[pos:].find(p[m])
-                    pos += idx+1
+    # def _isMatch(self, s, p):
+    #     # print "here:", (s, p)
+    #     if not s:
+    #         sp = set(p)
+    #         if len(sp) == 1 and sp.pop() == '*':
+    #             return True
 
-            return False
+    #     i = j = 0
+    #     while i < len(s) and j < len(p):
+    #         # print (i, j), (s[i], p[j])
+    #         if p[j] == '?' or s[i] == p[j]:
+    #             i, j = i+1, j+1
+    #             continue
+    #         elif p[j] == '*':
+    #             m, c = j+1, 0
+    #             while m < len(p) and p[m] in ('*', '?'):
+    #                 if p[m] == '?':
+    #                     c += 1
+    #                 m += 1
 
-        return i == len(s) and j == len(p)
+    #             if m == len(p):
+    #                 return True
+
+    #             # longest
+    #             idx = s.rfind(p[m])
+    #             while idx != -1:
+    #                 if self._isMatch(s[idx+1:], p[m+1:]):
+    #                     return True
+    #                 idx = s[:idx].rfind(p[m])
+
+    #             return False
+                
+    #             # shortest
+    #             # idx = s.find(p[m])
+    #             # pos = idx+1
+    #             # while idx != -1:
+    #             #     if self._isMatch(s[pos:], p[m+1:]):
+    #             #         return True
+    #             #     idx = s[pos:].find(p[m])
+    #             #     pos += idx+1
+    #             # return False
+            
+    #         return False
+
+    #     return i == len(s) and j == len(p)
