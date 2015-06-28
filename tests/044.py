@@ -10,6 +10,9 @@ class Test(unittest.TestCase):
     def test_isMatching(self):
         s = solutions.Solution()
 
+        st, pa = "aaa", "ab*a*c*a"
+        self.assertEqual(s.isMatch(st, pa), False)
+
         st, pa = "aa", "a"
         self.assertEqual(s.isMatch(st, pa), False)
 
@@ -54,7 +57,7 @@ class Test(unittest.TestCase):
         self.assertEqual(s.isMatch(st, pa), False)
 
         st, pa = "a", "*?*"
-        self.assertEqual(s.isMatch(st, pa), False)
+        self.assertEqual(s.isMatch(st, pa), True)
 
 
         st, pa = "aabefefefb", "*b*?"
@@ -161,12 +164,6 @@ class Test(unittest.TestCase):
         sp = "b*bb*a*bba*b*a*bbb*aba*babbb*aa*aabb*bbb*a"
         self.assertEqual(s.isMatch(st, pa), False)
 
-    def test_simplifyPattern(self):
-        s = solutions.Solution()
-
-        pa = "b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a"
-        sp = "b*bb*a*bba*b*a*bbb*aba*babbb*aa*aabb*bbb*a"
-        self.assertEqual(s._simplifyPattern(pa, pa[0], pa[0]), sp)
 
 
 if __name__ == '__main__':
