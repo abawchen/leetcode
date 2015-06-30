@@ -14,18 +14,25 @@ class Solution:
     # @return {boolean}
     def canJump(self, nums):
 
+        # print len(nums)
         stack = [0]
-        visited = {0}
         while stack:
             idx = stack.pop()
 
             if idx == len(nums)-1:
                 return True
 
-            for s in range(1, nums[idx]+1):
-                if idx+s not in visited and idx+s < len(nums):
-                    stack.append(idx+s)
-                    visited.add(idx+s)
+            maximum = idx
+            for step in range(nums[idx], 0, -1):
+                next = idx + step
+
+                if next >= len(nums)-1:
+                    return True
+
+                possible = next + nums[next]
+                if possible > maximum:
+                    maximum = possible
+                    stack.append(next)
 
         return False
 
