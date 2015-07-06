@@ -7,7 +7,7 @@ solutions = __import__('solutions.054_spiral_matrix', fromlist='*')
 
 class Test(unittest.TestCase):
 
-    def test_jump(self):
+    def test_spiralOrder(self):
         s = solutions.Solution()
 
         matrix = [
