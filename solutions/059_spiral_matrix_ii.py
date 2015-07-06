@@ -16,10 +16,7 @@ class Solution:
     # @return {integer[][]}
     def generateMatrix(self, n):
         
-        matrix = [ [] for i in range(n) ]
-        for i in xrange(n):
-            for j in xrange(n):
-                matrix[i].append(0)
+        matrix = [[0 for x in range(n)] for x in range(n)]
 
         boundaries = [n-1, n-1, 0, 1] #r, d, l, u
         bi = 0
