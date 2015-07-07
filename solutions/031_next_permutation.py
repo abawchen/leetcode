@@ -18,21 +18,25 @@ class Solution:
         if not nums:
             return
 
+        # find the first index(target) which nums[index] < nums[index+1]
         target = -1
         for i in xrange(len(nums)-2, -1, -1):
             if nums[i] < nums[i+1]:
                 target = i
                 break
 
+        # if not such index, just reverse the nums
         if target == -1:
             nums[:] = list(reversed(nums))
             return nums # for test
             # return
 
+        # reverse-find the first number larger than nums[target]
         for i in xrange(len(nums)-1, -1, -1):
             if nums[i] > nums[target]:
                 break
 
+        # I forget what I am doing ... lol
         v1, v2 = nums[target], nums.pop(i)
 
         # slower, 76ms

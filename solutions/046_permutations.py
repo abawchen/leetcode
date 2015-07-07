@@ -13,18 +13,35 @@ class Solution:
     # @return {integer[][]}
     def permute(self, nums):
 
-        if not num:
-            return num
-        res = [[nums[0]]]
-        print res
-        for i in range(1, len(nums)):
-            for j in range(len(res)):
-                tmp = res.pop(0)
-                for k in range(len(tmp)+ 1):
-                    res.append(tmp[:k] + [nums[i]] + tmp[k:])
-                    
-        return res
+        # stack version(1):
+        ans = []
+        stack = [([], nums)]
+        while stack:
+            ret, nums = stack.pop(0)
+            if nums:
+                for i in range(len(nums)):
+                    stack.append((ret + [nums[i]], nums[:i] + nums[i+1:]))
+            else:
+                ans.append(ret)
+        return ans
 
+
+        # stack version(2):
+        # if not nums:
+        #     return nums
+
+        # res = [[nums[0]]]
+        # for i in range(1, len(nums)):
+        #     for j in range(len(res)):
+        #         tmp = res.pop(0)
+        #         for k in range(len(tmp)+ 1):
+        #             res.append(tmp[:k] + [nums[i]] + tmp[k:])
+
+        # return res
+
+
+
+        # recursion version:
         # if len(nums) <= 1:
         #     return [nums]
 
@@ -32,8 +49,4 @@ class Solution:
         # for i in range(len(nums)):
         #     permutations.extend([ [nums[i]] + p for p in self.permute(nums[:i] + nums[i+1:]) ])
 
-        # print permutations
         # return permutations
-
-
-
