@@ -6,7 +6,7 @@ sys.path.append('./')
 solutions = __import__('solutions.091_decode_ways', fromlist='*')
 
 
-class Test046(unittest.TestCase):
+class Test(unittest.TestCase):
 
     def test_numDecodings(self):
         s = solutions.Solution()
@@ -40,9 +40,6 @@ class Test046(unittest.TestCase):
 
         st = '12210'
         self.assertEqual(s.numDecodings(st), 3)
-
-        # st = '12260121212122122'
-        # self.assertEqual(s.numDecodings(st), 0)
 
         st = '261012'
         self.assertEqual(s.numDecodings(st), 4)
