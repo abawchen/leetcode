@@ -18,16 +18,14 @@ class Solution:
         from collections import defaultdict
 
         indices, wordsDic = [], defaultdict(int)
-        sl, wl, twl, total = len(s), len(words[0]), len(words[0])*len(words), len(words)
+        wl, total = len(words[0]), len(words)
 
         for w in words:
             wordsDic[w] += 1
 
-        for i in range(sl):
+        for i in range(len(s) - wl*total + 1):
+            
             t, j, dic = 0, i, wordsDic.copy()
-
-            if twl > sl-i:
-                return indices
 
             while dic[s[j:j+wl]] > 0:
                 dic[s[j:j+wl]] -= 1
@@ -37,5 +35,3 @@ class Solution:
                 indices.append(i)
 
         return indices
-
-
