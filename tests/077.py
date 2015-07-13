@@ -16,16 +16,16 @@ class Test(unittest.TestCase):
         self.assertEqual(s.combine(n, k), [[]])
 
         n, k = 4, 1
-        self.assertEqual(s.combine(n, k), [[4], [3], [2], [1]])
+        self.assertEqual(sorted(s.combine(n, k)), sorted([[4], [3], [2], [1]]))
 
         n, k = 4, 2
-        self.assertEqual(s.combine(n, k), [[3, 4], [2, 4], [2, 3], [1, 4], [1, 3], [1, 2]])
+        self.assertEqual(sorted(s.combine(n, k)), sorted([[3, 4], [2, 4], [2, 3], [1, 4], [1, 3], [1, 2]]))
 
         n, k = 4, 3
-        self.assertEqual(s.combine(n, k), [[2, 3, 4], [1, 3, 4], [1, 2, 4], [1, 2, 3]])
+        self.assertEqual(sorted(s.combine(n, k)), sorted([[2, 3, 4], [1, 3, 4], [1, 2, 4], [1, 2, 3]]))
 
         n, k = 4, 4
-        self.assertEqual(s.combine(n, k), [[1, 2, 3, 4]])
+        self.assertEqual(sorted(s.combine(n, k)), sorted([[1, 2, 3, 4]]))
 
 
 
