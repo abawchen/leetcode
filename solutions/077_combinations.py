@@ -22,18 +22,31 @@ class Solution:
         if n == 0 or k == 0:
             return [[]]
 
-        stack = []
-        nums = [ x+1 for x in range(n) ]
-        for i in xrange(n-k+1):
-            stack.append(([i+1], k-1, nums[i+1:]))
-
         ans = []
-        while stack:
-            c, k, r = stack.pop()
-            if k == 0:
-                ans.append(c)
-            else:
-                for i in xrange(len(r)-k+1):
-                    stack.append((c+[r[i]], k-1, r[i+1:]))
-
+        nums = [ x+1 for x in range(n) ]
+        self._combine(ans, [], k, nums)
         return ans
+
+        # stack = []
+        # nums = [ x+1 for x in range(n) ]
+        # for i in xrange(n-k+1):
+        #     stack.append(([i+1], k-1, nums[i+1:]))
+
+        # ans = []
+        # while stack:
+        #     c, k, r = stack.pop()
+        #     if k == 0:
+        #         ans.append(c)
+        #     else:
+        #         for i in xrange(len(r)-k+1):
+        #             stack.append((c+[r[i]], k-1, r[i+1:]))
+        # return ans
+
+
+    def _combine(self, ans, tmp, k, nums):
+
+        if k == 0:
+            ans.append(tmp)
+        else:
+            for i in xrange(len(nums)-k+1):
+                self._combine(ans, tmp+[nums[i]], k-1, nums[i+1:])
