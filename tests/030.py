@@ -5,7 +5,7 @@ sys.path.append('./')
 solutions = __import__('solutions.030_substring_with_concatenation_of_all_words', fromlist='*')
 
 
-class Test014(unittest.TestCase):
+class Test(unittest.TestCase):
 
     def test_findSubstring(self):
         s = solutions.Solution()
