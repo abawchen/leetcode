@@ -3,7 +3,7 @@
 # @return {integer}
 
 def countPrimes(n):
-    
+
     from math import sqrt
 
     if n <= 2:
@@ -12,24 +12,26 @@ def countPrimes(n):
     l = [True] * (n)
     l[1] = False
 
-    for i in xrange(2, int(sqrt(n))+1):
+    for i in range(2, int(sqrt(n))+1):
         if l[i]:
-            for j in xrange(i*i, n, i):
+            for j in range(i*i, n, i):
                 l[j] = False
-    l = filter(lambda x: x == True, l[1:])
-    return len(l)
-    
-print countPrimes(0)
-print countPrimes(1)
-print countPrimes(2)
-print countPrimes(3)
-print countPrimes(4)
-# print countPrimes(30)
-# print countPrimes(100)     #4: 2, 3, 5, 7
-print countPrimes(100)    #25:
-# print countPrimes(499979)
-print countPrimes(999983)
+    # print(l)
+    l = list(filter(lambda x: x == True, l[1:]))
+    # print(l)
+    return len(list(l))
 
+# print(0, countPrimes(0))
+# print(1, countPrimes(1))
+# print(2, countPrimes(2))
+print(3, countPrimes(3))
+print(4, countPrimes(4))
+print(14, countPrimes(14))
+# print(100, countPrimes(100))
+# print(999983, countPrimes(999983))
+from math import pow
+big = int(pow(2, 31))
+print(countPrimes(big))
 
 # TIME LIMIT EXCEEDED @ 999983
 # def countPrimes(n):
