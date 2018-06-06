@@ -2,40 +2,40 @@ class Solution:
 
     ugly_nums = [1]
     ugly_status = [(1, 0)]
-    ugly_bases = [2, 3, 5]
+    ugly_primes = [2, 3, 5]
 
     def nthUglyNumber(self, n):
         import sys
         while n > len(Solution.ugly_nums):
             mi = -1
-            bi = 3
+            pi = 3
             minimum = sys.maxint
             print('*' * 10)
-            for i, (u, b) in enumerate(Solution.ugly_status):
-                print(minimum, i, (u, b))
-                if b > bi:
+            for i, (u, p) in enumerate(Solution.ugly_status):
+                print(minimum, i, (u, p))
+                if p > pi:
                     break
 
-                m = u * Solution.ugly_bases[b]
+                m = u * Solution.ugly_primes[p]
                 if m < minimum:
                     print('here:', m)
                     minimum = m
                     mi = i
-                    bi = b
+                    pi = p
                 elif m == minimum:
-                    if b == 2:
+                    if p == 2:
                         Solution.ugly_status.pop(i)
                     else:
-                        Solution.ugly_status[i] = (m, b + 1)
+                        Solution.ugly_status[i] = (m, p + 1)
                     break
                 elif m > minimum:
                     break
 
-            (u, b) = Solution.ugly_status[mi]
-            if b == 2:
+            (u, p) = Solution.ugly_status[mi]
+            if p == 2:
                 Solution.ugly_status.pop(mi)
             else:
-                Solution.ugly_status[mi] = (u, b + 1)
+                Solution.ugly_status[mi] = (u, p + 1)
             # print((m, 0))
             print(Solution.ugly_status)
             print(m)
