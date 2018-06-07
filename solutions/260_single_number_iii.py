@@ -11,9 +11,12 @@ The order of the result is not important. So in the above example, [5, 3] is als
 Your algorithm should run in linear runtime complexity. Could you implement it using only constant space complexity?
 '''
 class Solution:
-    def singleNumber(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[int]
-        """
 
+    def singleNumber(self, nums):
+        s = set()
+        for n in nums:
+            if n in s:
+                s.remove(n)
+            else:
+                s.add(n)
+        return list(s)
