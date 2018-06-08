@@ -1,37 +1,31 @@
 class Solution:
 
     def nthSuperUglyNumber(self, n, primes):
-        if n == 1:
-            return 1
-
         nums = [1]
         nums_set = set(nums)
         status = [(p, p, 1) for p in primes]
-        candidates = primes
         candidate_set = set(primes)
         while n > len(nums):
             next, prime, index = status.pop(0)
             nums_set.add(next)
             nums += [next]
-            # print(nums)
-            # print(candidate_set)
+
             if n == len(nums):
                 break
 
             while index < len(nums):
                 val = prime * nums[index]
+                index += 1
                 if val not in candidate_set:
-                    index += 1
-                    for i, (c, _, _) in enumerate(status):
-                        if val < c:
-                            break
+                    if len(status) == 0 or val > status[-1][0]:
+                        i = len(status)
+                    else:
+                        for i, (c, _, _) in enumerate(status):
+                            if val < c:
+                                break
                     status.insert(i, (val, prime, index))
                     candidate_set.add(val)
                     break
-                else:
-                    index += 1
-            print(status)
-            print(candidate_set)
         return nums[n-1]
 
     '''
