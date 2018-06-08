@@ -16,7 +16,9 @@ To the right of 1 there is 0 smaller element.
 
 
 class Solution:
-    def countSmaller(self, nums):
+
+    # O(n^2)
+    def countSmallerTLE(self, nums):
         ans = [0] * len(nums)
         for i in range(len(nums)-1, -1, -1):
             val = nums[i]
@@ -24,7 +26,9 @@ class Solution:
                 if val < nums[j]:
                     ans[j] += 1
         return ans
-        """
+
+    """
+    def countSmaller(self, nums):
         for i in range(len(nums) -2, -1, -1):
             current = nums[i]
             right = nums[i + 1]
@@ -36,4 +40,4 @@ class Solution:
                         ans[i] = ans[j] + 1
                         break
         return ans
-        """
+    """
