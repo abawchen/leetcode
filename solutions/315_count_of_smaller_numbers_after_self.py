@@ -17,27 +17,30 @@ To the right of 1 there is 0 smaller element.
 
 class Solution:
 
-    # O(n^2)
-    def countSmallerTLE(self, nums):
+    def searchSmaller(self, nums, num):
+        if len(nums) == 0 or num <= nums[0]:
+            return 0
+        if num > nums[-1]:
+            return len(nums)
+
+        start, end = 0, len(nums)
+        while True:
+            middle = int((start + end) / 2)
+            left = middle - 1
+            if num <= nums[middle]:
+                if num > nums[left]:
+                    return middle
+                end = middle
+            else:
+                start = middle
+
+    def countSmaller(self, nums):
         ans = [0] * len(nums)
+        sort = []
+
         for i in range(len(nums)-1, -1, -1):
-            val = nums[i]
-            for j in range(i):
-                if val < nums[j]:
-                    ans[j] += 1
+            num = nums[i]
+            ans[i] = self.searchSmaller(sort, num)
+            sort.insert(ans[i], num)
         return ans
 
-    """
-    def countSmaller(self, nums):
-        for i in range(len(nums) -2, -1, -1):
-            current = nums[i]
-            right = nums[i + 1]
-            if right < current:
-                ans[i] = ans[i + 1] + 1
-            else:
-                for j in range(i, len(nums)):
-                    if nums[j] < current:
-                        ans[i] = ans[j] + 1
-                        break
-        return ans
-    """
