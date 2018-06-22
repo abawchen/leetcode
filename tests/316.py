@@ -13,13 +13,8 @@ def test_solution():
     assert s.removeDuplicateLetters('bcacb') == 'acb'
     assert s.removeDuplicateLetters('cbacdcbc') == 'acdb'
     """
+    assert s.removeDuplicateLetters('ppuunwvlpndyldkdtzfjlgwq') == 'punvdyktzfjlgwq'
     # assert s.removeDuplicateLetters('ccacbaba') == 'acb'
-    assert s.removeDuplicateLetters('yioccqiorhtoslwlvfgzycahonecugtatbyphpuunwvaalcpndabyldkdtzfjlgwqk') == 'ciorhsaebpunvdyktzfjlgwq'
-    '''
-    cbacdcbc
-      ^^^ ^
-    cbcdcbc
-     ^^^
-    cbdcbc
-     ^^^
-    '''
+    # assert s.removeDuplicateLetters('dyldkdtzfjlgwqk') == 'dyktzfjlgwq'
+    # assert s.removeDuplicateLetters('yioccqiorhtoslwlvfgzycahonecugtatbyphpuunwvaalcpndabyldkdtzfjlgwqk') == \
+    #    'ciorhsaebpunvdyktzfjlgwq'
