@@ -35,30 +35,30 @@ class Solution:
         :type prerequisites: List[List[int]]
         :rtype: List[int]
         """
-        # if numCourses == 0:
-        #     return []
 
         from collections import defaultdict
         d = defaultdict(list)
         c = defaultdict(int)
-        f = set()
-        t = set()
-        o = set(range(numCourses))
+        ans = []
         for (e, s) in prerequisites:
             d[e].append(s)
             c[s] += 1
-            f.add(s)
-            t.add(e)
-        ans = []
-        course_list = list(t-f)
-        while len(course_list) != 0:
-            course = course_list.pop(0)
+
+        courses = []
+        for n in range(numCourses):
+            if c[n] == 0:
+                courses.append(n)
+
+        while len(courses) != 0:
+            course = courses.pop(0)
             ans.insert(0, course)
             for p in d[course]:
                 c[p] -= 1
                 if c[p] == 0:
-                    course_list.append(p)
+                    courses.append(p)
 
-        ans += list(o-(t|f))
+        for n in range(numCourses):
+            if c[n] != 0:
+                return []
 
         return ans
