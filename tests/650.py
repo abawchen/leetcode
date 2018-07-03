@@ -13,6 +13,9 @@ def test_solution():
     assert s.minSteps(7) == 7
     assert s.minSteps(8) == 6
     assert s.minSteps(9) == 6
+    assert s.minSteps(993) == 334
+    assert s.minSteps(999) == 46
+    assert s.minSteps(1000) == 21
 
 """
 # 5(5)

@@ -25,8 +25,20 @@ class Solution:
         :type n: int
         :rtype: int
         """
-        if n <= 1:
-            return 0
+        steps = [(0, 0), (0, 0)]+[(x, 1) for x in range(2, n+1)]
+        for i in range(2, n+1):
+            for j in range(i+1, n+1):
+                s, l = steps[i]
+                if j%i == 0:
+                    step = s+j/i
+                    if step < steps[j][0]:
+                        steps[j] = (step, i)
+                if (j-i)%l == 0:
+                    step = s+(j-i)/l
+                    if step < steps[j][0]:
+                        steps[j] = (step, l)
+        return int(steps[n][0])
+        """
         if n%2 != 0:
             return n
 
@@ -38,6 +50,7 @@ class Solution:
                 steps[i] = i
         steps[2] = 2
         return self._minSteps(steps, n)
+        """
 
     def _minSteps(self, steps, n):
         if steps[n] == -1:
