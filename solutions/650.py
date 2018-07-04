@@ -25,34 +25,10 @@ class Solution:
         :type n: int
         :rtype: int
         """
-        steps = [(0, 0), (0, 0)]+[(x, 1) for x in range(2, n+1)]
+        steps = [0, 0] + [x for x in range(2, n+1)]
         for i in range(2, n+1):
-            for j in range(i+1, n+1):
-                s, l = steps[i]
-                if j%i == 0:
-                    step = s+j/i
-                    if step < steps[j][0]:
-                        steps[j] = (step, i)
-                if (j-i)%l == 0:
-                    step = s+(j-i)/l
-                    if step < steps[j][0]:
-                        steps[j] = (step, l)
-        return int(steps[n][0])
-        """
-        if n%2 != 0:
-            return n
-
-        steps = [0]*(n+1)
-        for i in range(1, n+1):
-            if i%2 == 0:
-                steps[i] = -1
-            else:
-                steps[i] = i
-        steps[2] = 2
-        return self._minSteps(steps, n)
-        """
-
-    def _minSteps(self, steps, n):
-        if steps[n] == -1:
-            return 2 + self._minSteps(steps, int(n/2))
+            if n%i == 0:
+                for j in range(2, int(n/i)+1):
+                    t = i*j
+                    steps[t] = min(steps[t], steps[i]+j)
         return steps[n]
