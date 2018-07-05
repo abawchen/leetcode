@@ -45,7 +45,6 @@ class Solution:
         """
         from collections import defaultdict
         s = set(stones)
-        can = defaultdict(bool)
         units = defaultdict(set)
         units[1] = set([1])
         for i in range(1, len(stones)):
