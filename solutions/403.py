@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 https://leetcode.com/problems/frog-jump/description/
 
@@ -22,9 +23,12 @@ third stone at the 3rd unit, and so on...
 The last stone at the 17th unit.
 
 Return true. The frog can jump to the last stone by jumping
-1 unit to the 2nd stone, then 2 units to the 3rd stone, then
-2 units to the 4th stone, then 3 units to the 6th stone,
-4 units to the 7th stone, and 5 units to the 8th stone.
+1 unit to the 2nd stone,
+then 2 units to the 3rd stone,
+then 2 units to the 4th stone,
+then 3 units to the 6th stone,
+then 4 units to the 7th stone,
+and 5 units to the 8th stone.
 Example 2:
 
 [0,1,2,3,4,8,9,11]
@@ -39,4 +43,20 @@ class Solution:
         :type stones: List[int]
         :rtype: bool
         """
+        from collections import defaultdict
+        s = set(stones)
+        can = defaultdict(bool)
+        units = defaultdict(set)
+        units[1] = set([1])
+        for i in range(1, len(stones)):
+            stone = stones[i]
+            for k in units[stone]:
+                for x in [k-1, k, k+1]:
+                    if x > 0:
+                        units[stone+x].add(x)
+                        t = stone+x
+                        # if t in s:
+                        #    units[t].add(x)
+
+        return len(units[stones[-1]]) != 0
 
