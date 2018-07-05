@@ -53,7 +53,7 @@ class Solution:
                 for x in [k-1, k, k+1]:
                     if x > 0:
                         units[stone+x].add(x)
-                        t = stone+x
+                        # t = stone+x
                         # if t in s:
                         #    units[t].add(x)
 
