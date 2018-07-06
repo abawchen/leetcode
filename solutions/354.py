@@ -15,3 +15,35 @@ class Solution:
         :type envelopes: List[List[int]]
         :rtype: int
         """
+        from collections import defaultdict
+        contains = defaultdict(set)
+        contained_by = defaultdict(set)
+        depths = defaultdict(int)
+        total = len(envelopes)
+        es = set(list(range(total)))
+        for i in range(total):
+            for j in range(total):
+                if i != j:
+                    a = envelopes[i]
+                    b = envelopes[j]
+                    if a[0] < b[0] and a[1] < b[1]:
+                        contains[j].add(i)
+                        contained_by[i].add(j)
+                        es.discard(j)
+                    elif a[0] > b[0] and a[1] > b[1]:
+                        contains[i].add(j)
+                        contained_by[j].add(i)
+                        es.discard(i)
+        ans = 0
+        while len(es) != 0:
+            cur = es.pop()
+            # print(envelopes[cur], depths[cur])
+            if len(contained_by[cur]) == 0:
+                ans = max(ans, 1+depths[cur])
+            for cb in contained_by[cur]:
+                depths[cb] = max(depths[cb], 1+depths[cur])
+                contains[cb].discard(cur)
+                if len(contains[cb]) == 0:
+                    es.add(cb)
+
+        return ans
