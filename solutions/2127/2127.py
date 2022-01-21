@@ -9,7 +9,22 @@ class Attendee:
 
 class Solution:
 
-    def bfs(self, root, is_couple, attendees) -> int:
+
+    def bfs_couple(self, root: int, lover: int, attendees: {}) -> int:
+        accu = 0
+        stack = [attendees.pop(root, Attendee())]
+        while len(stack) != 0:
+            cur = stack.pop()
+            accu = max(accu, cur.accu)
+            for fav in cur.favorited_by:
+                if fav == lover:
+                    continue
+                attendees[fav].accu = cur.accu + 1
+                stack.append(attendees[fav])
+                attendees.pop(fav, None)
+        return accu
+
+    def bfs(self, root: int, attendees: {}) -> int:
         accu = 0
         stack = [attendees.pop(root, Attendee())]
         while len(stack) != 0:
@@ -17,11 +32,11 @@ class Solution:
             accu = max(accu, cur.accu)
             for fav in cur.favorited_by:
                 if fav == root:
-                    return accu
+                    return cur.accu
                 attendees[fav].accu = cur.accu + 1
                 stack.append(attendees[fav])
                 attendees.pop(fav, None)
-        return accu if is_couple else 0
+        return 0
 
     def maximumInvitations(self, favorite: list[int]) -> int:
         ans = 0
@@ -36,16 +51,13 @@ class Solution:
 
         # start from standalone couples
         for x, y in couples.items():
-            accu_x = self.bfs(x, True, attendees)
-            accu_y = self.bfs(y, True, attendees)
-            ans = max(ans, accu_x + accu_y)
-        
-        # include all standalone couples
-        ans += 2 * len(couples)
+            accu_x = self.bfs_couple(x, y, attendees)
+            accu_y = self.bfs_couple(y, x, attendees)
+            ans += (2 + accu_x + accu_y)
 
         for k, v in list(attendees.items()):
             if k in attendees:
-                accu = self.bfs(k, False, attendees)
+                accu = self.bfs(k, attendees)
                 ans = max(ans, 1+accu)
 
         return ans
@@ -111,10 +123,19 @@ class SolutionTestCase(unittest.TestCase):
         self.assertEqual(expected, got)
 
     def test_10(self):
-        data =  [22,9,3,4,6,23,5,12,16,20,13,9,1,17,4,3,9,18,16,24,0,18,11,22,1]
+        #       [ 0,1,2,3,4, 5,6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+        data =  [22,9,3,4,6,23,5,12,16,20,13, 9, 1,17, 4, 3, 9,18,16,24, 0,18,11,22, 1]
         expected = 5
         got = self.solution.maximumInvitations(data)
         self.assertEqual(expected, got)
+
+    def test_11(self):
+        #      [0,1,2, 3, 4,5,6,7,8,9,10,11,12,13,14,15]
+        data = [7,0,7,13,11,6,8,5,9,8, 9,14,15, 7,11, 6]
+        expected = 11
+        got = self.solution.maximumInvitations(data)
+        self.assertEqual(expected, got)
+
 
 if __name__ == '__main__':
     unittest.main()
