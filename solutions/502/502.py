@@ -25,6 +25,7 @@ class Solution:
                 if idx == len(projects):
                     break
 
+        # our capital is bigger enough to start any project
         if count < k and idx != -1:
             projects = sorted(projects, key = lambda p: -p[1])
             w += sum([p[1] for p in projects[:(k-count)]])
