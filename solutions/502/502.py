@@ -5,12 +5,13 @@ class Solution:
 
     def findMaximizedCapital(self, k: int, w: int, profits: list[int], capital: list[int]) -> int:
         projects = sorted(zip(capital, profits), key = lambda p : p[0])
+        count = 0
         for r in range(k):
             profit = 0
             idx = -1
             for i, p in enumerate(projects):
                 if w >= p[0]:
-                    if p[1] > profit:
+                    if p[1] >= profit:
                         idx = i
                         profit = p[1]
                 else:
@@ -20,6 +21,14 @@ class Solution:
             else:
                 projects.pop(idx)
                 w += profit
+                count += 1
+                if idx == len(projects):
+                    break
+
+        if count < k and idx != -1:
+            projects = sorted(projects, key = lambda p: -p[1])
+            w += sum([p[1] for p in projects[:(k-count)]])
+              
         return w
 
 
@@ -70,7 +79,19 @@ class SolutionTestCase(unittest.TestCase):
         w = 100000
         profits = fixtures.profits_05
         capital = fixtures.capital_05
+        expected = 1000100000
         got = self.solution.findMaximizedCapital(k, w, profits, capital)
+        self.assertEqual(expected, got)
+
+    def test_06(self):
+        k = 2
+        w = 0
+        profits = [1,2,3]
+        capital = [0,9,10]
+        expected = 1
+        got = self.solution.findMaximizedCapital(k, w, profits, capital)
+        self.assertEqual(expected, got)
+
 
 if __name__ == '__main__':
     unittest.main()
