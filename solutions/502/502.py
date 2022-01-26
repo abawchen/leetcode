@@ -1,5 +1,5 @@
 import unittest
-
+import fixtures
 
 class Solution:
 
@@ -65,6 +65,12 @@ class SolutionTestCase(unittest.TestCase):
         got = self.solution.findMaximizedCapital(k, w, profits, capital)
         self.assertEqual(expected, got)
 
+    def test_05(self):
+        k = 100000
+        w = 100000
+        profits = fixtures.profits_05
+        capital = fixtures.capital_05
+        got = self.solution.findMaximizedCapital(k, w, profits, capital)
 
 if __name__ == '__main__':
     unittest.main()
