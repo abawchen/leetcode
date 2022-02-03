@@ -20,15 +20,70 @@ Explanation: nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
 
 import unittest
 
-class Ballon:
 
-    def __init__(self, value, left, right):
-        self.value = value
-        self.left = left
-        self.right = right
+
+def toKey(nums):
+    return "-".join([str(n) for n in nums])
+
+
+class Node:
+
+    def __init__(self, nums, bursts=0):
+        self.nums = nums
+        self.key = toKey(nums)
+        self.bursts = bursts
+        self.coins = 0
+        self.parent = None
 
 class Solution:
 
+    def maxOfThree(self, nums):
+        return nums[0]*nums[1]*nums[2] + nums[0]*nums[-1] + max(nums[0], nums[-1])
+
+    def maxCoins(self, nums):
+        if len(nums) == 0:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        if len(nums) == 2:
+            return nums[0]*nums[1] + max(nums)
+        if len(nums) == 3:
+            return self.maxOfThree(nums)
+
+        balloons = {}
+        for num in nums[1:-1]:
+            key = "-".join([str(nums[0]), str(num), str(nums[-1])])
+            base = [nums[0], num, nums[-1]]
+            if num not in balloons:
+                balloons[key] = self.maxOfThree(base)
+        
+        print(balloons)
+        root = Node(nums)
+        balloons[root.key] = 0
+        stack = [root]
+        while len(stack) != 0:
+            cur = stack.pop()
+            print(cur.key)
+            # if len(cur.nums) == 3:
+            #     pass
+            #     # cur.parent.coins = 
+            for i in range(1, len(cur.nums)-1):
+                bursts = nums[i-1]*nums[i]*nums[i+1]
+                rests = cur.nums[:i] + cur.nums[i+1:]
+                key = toKey(rests)
+                print("i:", i, "|rests:", rests)
+                if key in balloons:
+                    balloons[cur.key] = max(balloons[cur.key], bursts + balloons[key])
+                else:
+                    balloons[key] = 0
+                    node = Node(rests, bursts)
+                    stack.append(node)
+
+        print(balloons)
+        print(balloons[root.key])
+            
+
+    '''
     def maxCoins(self, nums):
         if len(nums) == 0:
             return 0
@@ -91,7 +146,7 @@ class Solution:
                 + max(biggest.left.value, biggest.right.value)
 
         return coins
-
+    '''
     '''
     def maxCoins(self, nums):
         """
@@ -145,44 +200,64 @@ class SolutionTestCase(unittest.TestCase):
     def setUp(self):
         self.solution = Solution()
 
-    def test_01(self):
-        assert self.solution.maxCoins([10]) == 10
-        assert self.solution.maxCoins([3,8]) == 3*8 + 8
-        assert self.solution.maxCoins([3,10,3]) == (90 + 9 + 3)
-        """
-        """
-        assert self.solution.maxCoins([3,5,8]) == 152 #(3*5*8 + 3*8 + 8)
-        assert self.solution.maxCoins([1,5,8]) == (5 + 40 + 8)
-        assert self.solution.maxCoins([8,5,3]) == 152
-        assert self.solution.maxCoins([3,1,5,8]) == (15 + 152)
-        assert self.solution.maxCoins([0,3,1,5,8]) == 167
-        assert self.solution.maxCoins([3,0,1,5,8]) == 167
+    # def test_01(self):
+    #     nums = [10]
+    #     expected = 10
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
+
+    #     nums = [3,8]
+    #     expected = 3*8 + 8
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
+
+    #     nums = [3,10,3]
+    #     expected = 90 + 9 + 3
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
+
+    #     nums = [3, 5, 8]
+    #     expected = 152
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
 
     def test_02(self):
-        pass
-        # assert s.maxCoins([3,2,5,8]) == (3*2*5 + 152)
-        # assert s.maxCoins([3,5,8]) == 120 + 24 + 8 # 30
-        # assert s.maxCoins([3,2,8]) == 48 + 24 + 8  # 80
-        # # assert s.maxCoins([3,1,2,5,8]) == (6 + 30 + 152)
-        """
-        assert s.maxCoins([1,3,5,8]) == (3 + 152)
-        assert s.maxCoins([1,3,2,5,8]) == (3 + 30 + 152)
-        assert s.maxCoins([9,76,64,21]) == 116718 # (102144 + 14574)
-        assert s.maxCoins([9,76,21]) == 14574
-        assert s.maxCoins([76,64,21,21]) == 137332 # (64*76*21 + 35188)
-        # """
-        """
-        ==> 先砍 64
-            76*64*21 + 76*21*21 + 76*21 + 76
-                       ^^^^^^^^
-        ==> 先砍 21
-            64*21*21 + 76*64*61 + 76*21 + 76
-            ^^^^^^^^
-        """
-        """
-        assert s.maxCoins([76,21,21]) == 35188
-        assert s.maxCoins([76,64,21]) == 103816
-        """
+        # nums = [3,1,5,8]
+        # expected = 167
+        # got = self.solution.maxCoins(nums)
+
+        nums = [3,1,2,5,8]
+        expected = 6 + 30 + 152
+        got = self.solution.maxCoins([3,1,2,5,8])
+        print(got)
+        # assert self.solution.maxCoins([0,3,1,5,8]) == 167
+        # assert self.solution.maxCoins([3,0,1,5,8]) == 167
+
+    # def test_03(self):
+    #     pass
+    #     # assert s.maxCoins([3,2,5,8]) == (3*2*5 + 152)
+    #     # assert s.maxCoins([3,5,8]) == 120 + 24 + 8 # 30
+    #     # assert s.maxCoins([3,2,8]) == 48 + 24 + 8  # 80
+    #     # # assert s.maxCoins([3,1,2,5,8]) == (6 + 30 + 152)
+    #     """
+    #     assert s.maxCoins([1,3,5,8]) == (3 + 152)
+    #     assert s.maxCoins([1,3,2,5,8]) == (3 + 30 + 152)
+    #     assert s.maxCoins([9,76,64,21]) == 116718 # (102144 + 14574)
+    #     assert s.maxCoins([9,76,21]) == 14574
+    #     assert s.maxCoins([76,64,21,21]) == 137332 # (64*76*21 + 35188)
+    #     # """
+    #     """
+    #     ==> 先砍 64
+    #         76*64*21 + 76*21*21 + 76*21 + 76
+    #                    ^^^^^^^^
+    #     ==> 先砍 21
+    #         64*21*21 + 76*64*61 + 76*21 + 76
+    #         ^^^^^^^^
+    #     """
+    #     """
+    #     assert s.maxCoins([76,21,21]) == 35188
+    #     assert s.maxCoins([76,64,21]) == 103816
+    #     """
 
 if __name__ == '__main__':
     unittest.main()
