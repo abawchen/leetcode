@@ -10,36 +10,39 @@ class Solution:
             right += num
             if num > left:
                 left = num
+        prev = 0
         count = 0
-        while left < right:
-            mid = int((left+right)/2)
-            print(left, right)
+        mid = int((left+right)/2)
+        while left != mid and right != mid:
+            
+            # print(left, right)
             group = 0
             accu = 0
             for num in nums:
-                if num > mid:
-                    accu = 0
+                if accu + num > mid:
+                    accu = num
                     group += 1
                     continue
-                if accu + num <= mid:
-                    accu = 0
-                    group += 1
-                    continue
-
                 accu += num
+                
+            print(accu)
+            print(left, right, mid, group)
+            print("*" * 20)
 
-            # print(group, mid)
-
-            if group > m:
+            # if group == prev:
+            #     break
+            # prev = group
+            if group < m:
                 right = mid
             else:
                 left = mid
             
             count += 1
-            if count == 2:
-                break
-
-        return right
+            mid = int((left+right)/2)
+            # if count == 4:
+            #     break
+        print(left, right, mid)
+        return mid
 
 
         
@@ -70,12 +73,12 @@ class SolutionTestCase(unittest.TestCase):
     def setUp(self):
         self.solution = Solution()
 
-    def test_01(self):
-        nums = [7,2,5,10,8]
-        m = 2
-        expected = 18
-        got = self.solution.splitArray(nums, m)
-        self.assertEqual(expected, got)
+    # def test_01(self):
+    #     nums = [7,2,5,10,8]
+    #     m = 2
+    #     expected = 18
+    #     got = self.solution.splitArray(nums, m)
+    #     self.assertEqual(expected, got)
 
     # def test_02(self):
     #     nums = [7,2,5,10,8]
@@ -84,12 +87,12 @@ class SolutionTestCase(unittest.TestCase):
     #     got = self.solution.splitArray(nums, m)
     #     self.assertEqual(expected, got)
 
-    # def test_03(self):
-    #     nums = [4, 4, 1]
-    #     m = 3
-    #     expected = 4
-    #     got = self.solution.splitArray(nums, m)
-    #     self.assertEqual(expected, got)
+    def test_03(self):
+        nums = [4, 4, 1]
+        m = 3
+        expected = 4
+        got = self.solution.splitArray(nums, m)
+        self.assertEqual(expected, got)
 
     # def test_04(self):
     #     nums = [1, 2, 3, 4, 5]
