@@ -11,29 +11,25 @@ class Solution:
             if num > left:
                 left = num
 
-        if m == 1:
+        if m == 1 or len(nums) == 1:
             return right
 
         while left != right:
-            mid = int((left+right)/2)
-            group = 0
             accu = 0
-            for i, num in enumerate(nums):
+            group = 1
+            mid = int((left+right)/2)
+            for i, num in enumerate(nums[:-1]):
                 cur = accu + num
                 if cur == mid:
                     group += 1
                     accu = 0
                 elif cur < mid:
-                    if i == len(nums) - 1:
-                        group += 1
-                    else:
-                        accu = cur
+                    accu = cur
                 else:
                     group += 1
-                    if i == len(nums) - 1:
-                        group += 1
-                    else:
-                        accu = num
+                    accu = num
+            if accu + nums[-1] > mid:
+                group += 1
 
             if group > m:
                 # too many group, mid is too small
