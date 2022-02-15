@@ -23,7 +23,7 @@ import unittest
 
 
 def toKey(nums):
-    return "-".join([str(n) for n in nums])
+    return ",".join([str(n) for n in nums])
 
 
 class Node:
@@ -60,8 +60,10 @@ class Solution:
             cur = stack.pop()
             # print("cur:", cur.key)
             if cur.length == 3:
+                # cur.val = nums[0]*nums[1]*nums[2]
+                # cur.sub = nums[0]*nums[-1] + max(nums[0], nums[-1])
                 cur.sub = self.maxOfThree(cur.nums)
-                # print("|", cur.sub, cur.val)
+                print(cur.key, "|", cur.sub, cur.val)
                 while cur.parent != None and cur.val + cur.sub > visits[cur.parent.key].sub:
                     visits[cur.parent.key].sub = cur.val + cur.sub
                     cur = visits[cur.parent.key]
@@ -79,26 +81,29 @@ class Solution:
                     stack.append(node)
                 else:
                     node = visits[key]
-                    node.val = max(node.val, val)
-                    node.parent = cur
-                    # print("node.key", node.key, node.val, node.sub)
-                    # print("cur.key", cur.key, cur.val, cur.sub)
-                    # print("val", val)
-                    # node
-                    # cur.val = val
+                    # print(node.val)
+                    if val > node.val:
+                        node.val = val
+                        # node.val = max(node.val, val)
+                        node.parent = cur
+                        # print("node.key", node.key, node.val, node.sub)
+                        # print("cur.key", cur.key, cur.val, cur.sub)
+                        # print("val", val)
+                        # node
+                        # cur.val = val
 
-                    # cur.sub = max(cur.sub, val + visits[key].sub)
+                        # cur.sub = max(cur.sub, val + visits[key].sub)
 
-                    # cur.sub = max(cur.sub + cur.val, visits[key].sub)
-                    # print("kkkkk", key, sub, val, visits[key].val, visits[key].sub)
-                    while node.parent != None and node.val + node.sub > visits[node.parent.key].sub:
-                        visits[node.parent.key].sub = node.val + node.sub
-                        # print("node.parent.key", node.parent.key, visits[node.parent.key].val, visits[node.parent.key].sub)
-                        node = visits[node.parent.key]
+                        # cur.sub = max(cur.sub + cur.val, visits[key].sub)
+                        # print("kkkkk", key, sub, val, visits[key].val, visits[key].sub)
+                        while node.parent != None and node.val + node.sub > visits[node.parent.key].sub:
+                            visits[node.parent.key].sub = node.val + node.sub
+                            # print("node.parent.key", node.parent.key, visits[node.parent.key].val, visits[node.parent.key].sub)
+                            node = visits[node.parent.key]
                     continue
         # print(visits)
         # for key, node in visits.items():
-        #     print(key, node.val, node.sub)
+        #     print(f'[{key}]', "val:", node.val, "sub:", node.sub)
         return root.sub
 
 
@@ -140,6 +145,7 @@ class SolutionTestCase(unittest.TestCase):
 
     def test_02(self):
         nums = [3,1,5,8]
+        print("\n", nums)
         expected = 167
         got = self.solution.maxCoins(nums)
         self.assertEqual(expected, got)
@@ -172,10 +178,34 @@ class SolutionTestCase(unittest.TestCase):
         self.assertEqual(self.solution.maxCoins([9,76,21]), 14574)
         self.assertEqual(self.solution.maxCoins([76,64,21,21]), 137332) # (64*76*21 + 35188)
     
-
     def test_04(self):
+        nums = [9,76,97,60,5]
+        print("\n", nums)
+        # [9,76,97,60,5] val: 0 sub: 486114
+        # [9,97,60,5] val: 66348 sub: 70767
+        # [9,76,60,5] val: 442320 sub: 43794
+        # [9,76,97,5] val: 29100 sub: 70767
+
+        got = self.solution.maxCoins(nums)  
+        
+        nums = [9,76,64,97,60,5]
+        # [9,76,97,60,5] val: 471808(76*64*97) sub: 542575
+        print("\n", nums)
+        got = self.solution.maxCoins(nums)  
+        
+    def test_05(self):
         nums = [9,76,64,21,97,60,5]
+       # [9,76,64,97,60,5] val: 130368 sub: 1014383
+
+        print("\n", nums)
         expected = 1088290
+        got = self.solution.maxCoins(nums)
+        self.assertEqual(expected, got)
+
+
+    def test_06(self):
+        nums = [35,16,83,87,84,59,48,41]
+        expected = 1583373
         got = self.solution.maxCoins(nums)
         self.assertEqual(expected, got)
 
