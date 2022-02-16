@@ -66,9 +66,18 @@ class Solution:
                     cur = visits[cur.parent.key]
                 continue
 
-            for i in range(1, len(cur.nums)-1):
+            # for i in range(1, len(cur.nums)-1):
+            for i in range(len(cur.nums)):
                 rests = cur.nums[:i] + cur.nums[i+1:]
-                val = cur.nums[i-1]*cur.nums[i]*cur.nums[i+1]
+                if i == 0:
+                    pv = 1
+                else:
+                    pv = cur.nums[i-1]
+                if i == len(cur.nums) - 1:
+                    nt = 1
+                else:
+                    nt = cur.nums[i+1] 
+                val = pv * cur.nums[i] * nt
                 key = toKey(rests)
                 if key not in visits:
                     node = Node(rests, key, cur, val, 0)
@@ -190,11 +199,12 @@ class SolutionTestCase(unittest.TestCase):
 
 
     def test_07(self):
-        nums = [2,3,9,1]
-        print("\n", nums)
-        expected = 76
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
+        print(self.solution.maxCoins([2,3,7,9]))
+        # nums = [2,3,9,1]
+        # print("\n", nums)
+        # expected = 76
+        # got = self.solution.maxCoins(nums)
+        # self.assertEqual(expected, got)
 
         nums = [2,3,7,9,1]
         print("\n", nums)
