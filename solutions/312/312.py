@@ -28,12 +28,12 @@ def toKey(nums):
 
 class Node:
 
-    def __init__(self, nums: list[int], key: str, val: int, parent=None):
+    def __init__(self, nums: list[int], key: str, parent, val: int, sub: int):
         self.nums = nums
         self.length = len(nums)
         self.key = key
         self.val = val
-        self.sub = 0
+        self.sub = sub
         self.parent = parent
 
 class Solution:
@@ -52,18 +52,15 @@ class Solution:
         if len(nums) == 3:
             return self.maxOfThree(nums)
 
-        root = Node(nums, toKey(nums), 0)
+        root = Node(nums, toKey(nums), None, 0, 0)
         visits = {root.key: root}
         stack = [root]
 
         while len(stack) != 0:
             cur = stack.pop()
-            # print("cur:", cur.key)
+
             if cur.length == 3:
-                # cur.val = nums[0]*nums[1]*nums[2]
-                # cur.sub = nums[0]*nums[-1] + max(nums[0], nums[-1])
                 cur.sub = self.maxOfThree(cur.nums)
-                print(cur.key, "|", cur.sub, cur.val)
                 while cur.parent != None and cur.val + cur.sub > visits[cur.parent.key].sub:
                     visits[cur.parent.key].sub = cur.val + cur.sub
                     cur = visits[cur.parent.key]
@@ -74,36 +71,18 @@ class Solution:
                 val = cur.nums[i-1]*cur.nums[i]*cur.nums[i+1]
                 key = toKey(rests)
                 if key not in visits:
-                    # print(i, cur.nums[i-1], cur.nums[i], cur.nums[i+1])
-                    # print("key:", key, "val:", val)
-                    node = Node(rests, key, val, cur)
+                    node = Node(rests, key, cur, val, 0)
                     visits[key] = node
                     stack.append(node)
                 else:
-                    node = visits[key]
-                    # print(node.val)
-                    if val > node.val:
-                        node.val = val
-                        # node.val = max(node.val, val)
-                        node.parent = cur
-                        # print("node.key", node.key, node.val, node.sub)
-                        # print("cur.key", cur.key, cur.val, cur.sub)
-                        # print("val", val)
-                        # node
-                        # cur.val = val
-
-                        # cur.sub = max(cur.sub, val + visits[key].sub)
-
-                        # cur.sub = max(cur.sub + cur.val, visits[key].sub)
-                        # print("kkkkk", key, sub, val, visits[key].val, visits[key].sub)
-                        while node.parent != None and node.val + node.sub > visits[node.parent.key].sub:
-                            visits[node.parent.key].sub = node.val + node.sub
-                            # print("node.parent.key", node.parent.key, visits[node.parent.key].val, visits[node.parent.key].sub)
-                            node = visits[node.parent.key]
+                    node = Node(rests, key, cur, val, visits[key].sub)
+                    while node.parent != None and node.val + node.sub > visits[node.parent.key].sub:
+                        visits[node.parent.key].sub = node.val + node.sub
+                        node = visits[node.parent.key]
                     continue
-        # print(visits)
-        # for key, node in visits.items():
-        #     print(f'[{key}]', "val:", node.val, "sub:", node.sub)
+       
+        for key, node in visits.items():
+            print(f'[{key}]', "val:", node.val, "sub:", node.sub)
         return root.sub
 
 
@@ -112,100 +91,114 @@ class SolutionTestCase(unittest.TestCase):
     def setUp(self):
         self.solution = Solution()
 
-    def test_01(self):
-        nums = [10]
-        expected = 10
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
+    # def test_01(self):
+    #     nums = [10]
+    #     expected = 10
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
 
-        nums = [3,8]
-        expected = 3*8 + 8
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
+    #     nums = [3,8]
+    #     expected = 3*8 + 8
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
 
-        nums = [3,10,3]
-        expected = 90 + 9 + 3
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
+    #     nums = [3,10,3]
+    #     expected = 90 + 9 + 3
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
 
-        nums = [3, 5, 8]
-        expected = 152
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
+    #     nums = [3, 5, 8]
+    #     expected = 152
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
 
-        nums = [1, 5, 8]
-        expected = 56
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
+    #     nums = [1, 5, 8]
+    #     expected = 56
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
 
-        nums = [1, 3, 8]
-        expected = 40
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
+    #     nums = [1, 3, 8]
+    #     expected = 40
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
 
-    def test_02(self):
-        nums = [3,1,5,8]
-        print("\n", nums)
-        expected = 167
-        got = self.solution.maxCoins(nums)
-        self.assertEqual(expected, got)
-        self.assertEqual(expected, self.solution.maxCoins([0,3,1,5,8]))
-        self.assertEqual(expected, self.solution.maxCoins([3,0,1,5,8]))
+    # def test_02(self):
+    #     nums = [3,1,5,8]
+    #     print("\n", nums)
+    #     expected = 167
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
+    #     self.assertEqual(expected, self.solution.maxCoins([0,3,1,5,8]))
+    #     self.assertEqual(expected, self.solution.maxCoins([3,0,1,5,8]))
 
-        self.assertEqual(160, self.solution.maxCoins([1,3,5,8]))
-        # [1,3,5,8] --> [1,3,8] --> [1,8] --> [8]
-        #   3*5*8          24         8        8 = 160
+    #     self.assertEqual(160, self.solution.maxCoins([1,3,5,8]))
+    #     # [1,3,5,8] --> [1,3,8] --> [1,8] --> [8]
+    #     #   3*5*8          24         8        8 = 160
 
 
-        nums = [3,1,2,5,8]
-        expected = 6 + 30 + 152
-        got = self.solution.maxCoins([3,1,2,5,8])
-        self.assertEqual(expected, got)
+    #     nums = [3,1,2,5,8]
+    #     expected = 6 + 30 + 152
+    #     got = self.solution.maxCoins([3,1,2,5,8])
+    #     self.assertEqual(expected, got)
 
-        nums = [1,2,5,8]
-        print("qq", self.solution.maxCoins(nums))
+    #     nums = [1,2,5,8]
+    #     print("qq", self.solution.maxCoins(nums))
 
-        nums = [1,3,5,8]
-        print("qq", self.solution.maxCoins(nums))
+    #     nums = [1,3,5,8]
+    #     print("qq", self.solution.maxCoins(nums))
 
-        nums = [1,3, 2,8]
-        print("qq", self.solution.maxCoins(nums))
+    #     nums = [1,3, 2,8]
+    #     print("qq", self.solution.maxCoins(nums))
       
 
-    def test_03(self):
-        self.assertEqual(self.solution.maxCoins([1,3,2,5,8]), 190)
-        self.assertEqual(self.solution.maxCoins([9,76,64,21]), 116718) # (102144 + 14574)
-        self.assertEqual(self.solution.maxCoins([9,76,21]), 14574)
-        self.assertEqual(self.solution.maxCoins([76,64,21,21]), 137332) # (64*76*21 + 35188)
+    # def test_03(self):
+    #     self.assertEqual(self.solution.maxCoins([1,3,2,5,8]), 190)
+    #     self.assertEqual(self.solution.maxCoins([9,76,64,21]), 116718) # (102144 + 14574)
+    #     self.assertEqual(self.solution.maxCoins([9,76,21]), 14574)
+    #     self.assertEqual(self.solution.maxCoins([76,64,21,21]), 137332) # (64*76*21 + 35188)
     
-    def test_04(self):
-        nums = [9,76,97,60,5]
-        print("\n", nums)
-        # [9,76,97,60,5] val: 0 sub: 486114
-        # [9,97,60,5] val: 66348 sub: 70767
-        # [9,76,60,5] val: 442320 sub: 43794
-        # [9,76,97,5] val: 29100 sub: 70767
+    # def test_04(self):
+    #     nums = [9,76,97,60,5]
+    #     print("\n", nums)
+    #     # [9,76,97,60,5] val: 0 sub: 486114
+    #     # [9,97,60,5] val: 66348 sub: 70767
+    #     # [9,76,60,5] val: 442320 sub: 43794
+    #     # [9,76,97,5] val: 29100 sub: 70767
 
-        got = self.solution.maxCoins(nums)  
+    #     got = self.solution.maxCoins(nums)  
         
-        nums = [9,76,64,97,60,5]
-        # [9,76,97,60,5] val: 471808(76*64*97) sub: 542575
-        print("\n", nums)
-        got = self.solution.maxCoins(nums)  
+    #     nums = [9,76,64,97,60,5]
+    #     # [9,76,97,60,5] val: 471808(76*64*97) sub: 542575
+    #     print("\n", nums)
+    #     got = self.solution.maxCoins(nums)  
         
-    def test_05(self):
-        nums = [9,76,64,21,97,60,5]
-       # [9,76,64,97,60,5] val: 130368 sub: 1014383
+    # def test_05(self):
+    #     nums = [9,76,64,21,97,60,5]
+    #     # [9,76,64,97,60,5] val: 130368 sub: 1014383
 
+    #     print("\n", nums)
+    #     expected = 1088290
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
+
+
+    # def test_06(self):
+    #     nums = [35,16,83,87,84,59,48,41]
+    #     expected = 1583373
+    #     got = self.solution.maxCoins(nums)
+    #     self.assertEqual(expected, got)
+
+
+    def test_07(self):
+        nums = [2,3,9,1]
         print("\n", nums)
-        expected = 1088290
+        expected = 76
         got = self.solution.maxCoins(nums)
         self.assertEqual(expected, got)
 
-
-    def test_06(self):
-        nums = [35,16,83,87,84,59,48,41]
-        expected = 1583373
+        nums = [2,3,7,9,1]
+        print("\n", nums)
+        expected = 279
         got = self.solution.maxCoins(nums)
         self.assertEqual(expected, got)
 
