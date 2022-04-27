@@ -7,6 +7,7 @@ class TreeNode:
 class Solution:
     # @param {TreeNode} root
     # @return {integer[]}
+    # inorder: left -> root -> right
     def inorderTraversal(self, root):
         if not root:
             return []
