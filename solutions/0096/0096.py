@@ -1,22 +1,19 @@
 import unittest
-
+from collections import defaultdict
 
 class Solution:
 
     def __init__(self):
-        self.dp = {
-            0:0,
-            1:1,
-        }
+        self.dp = defaultdict(int, {1:1})
 
     def numTrees(self, n: int) -> int:
         if n not in self.dp:
-            self.dp[n] = 0
             for i in range (1, n+1):
-                j, k = i-1, n-i
-                self.dp[n] += max(1, self.numTrees(j)) * max(1, self.numTrees(k))
+                self.dp[n] += max(1, self.numTrees(i-1)) * max(1, self.numTrees(n-i))
 
         return self.dp[n]
+        
+        
         
 
 class SolutionTestCase(unittest.TestCase):
